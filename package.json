@@ -1,0 +1,32 @@
+{
+    "name": "pocket-calendar-final",
+    "version": "0.1.0",
+    "private": true,
+    "main": "serverTest.js",
+    "dependencies": {
+        "axios": "^0.19.2",
+        "consolidate": "0.5.0",
+        "cookie-parser": "^1.4.5",
+        "cookie-session": "^1.4.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "3.0.4",
+        "firebase-admin": "^8.10.0",
+        "googleapis": "^48.0.0",
+        "node-cron": "^2.0.3",
+        "passport": "0.1.15",
+        "passport-pocket": "1.0.0",
+        "path": "^0.12.7",
+        "request": "2.12.0",
+        "swig": "0.13.2"
+    },
+    "scripts": {
+        "start": "node serverTest.js",
+        "heroku-postbuild": "cd client && npm install && npm run build"
+    },
+    "keywords": [
+        "passport",
+        "pocket",
+        "getpocket"
+    ]
+}

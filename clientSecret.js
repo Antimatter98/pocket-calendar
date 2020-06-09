@@ -1,0 +1,3 @@
+require('dotenv').config();
+
+exports.client = {"web":{"client_id":process.env.CLIENT_ID,"project_id":process.env.PROJECT_ID,"auth_uri":process.env.AUTH_URI,"token_uri":process.env.TOKEN_URI,"auth_provider_x509_cert_url":process.env.AUTH_CERT_PROVIDER_URL,"client_secret":process.env.CLIENT_SECRET,"redirect_uris":[process.env.REDIRECT_URI_1, process.env.REDIRECT_URI_2, process.env.REDIRECT_URI_3, process.env.REDIRECT_URI_4],"javascript_origins":[process.env.JS_ORIGIN_1, process.env.JS_ORIGIN_2, process.env.JS_ORIGIN_3, process.env.JS_ORIGIN_4]}};

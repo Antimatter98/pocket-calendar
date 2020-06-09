@@ -1,0 +1,46 @@
+.circular--square {
+  border-radius: 50%;
+  width: 50px;
+}
+
+.logo{
+  height: 50px;
+}
+
+.footer{
+  margin-top: -30px;
+  min-height: 100px;
+  background: black
+}
+
+.text-nav{
+  color: white;
+}
+
+.heart{
+  color: red;
+  margin: 0;
+  display: inline;
+}
+
+.text-foot-name{
+  color: white;
+  font-weight: 700;
+}
+
+.fa {
+  padding-top: 12px;
+  font-size: 15px;
+  width: 10px;
+  text-align: center;
+  text-decoration: none;
+  margin: 0px 10px;
+}
+
+.fa:hover {
+    opacity: 0.5;
+}
+
+.foottext{
+  padding-top: 17px;
+}
