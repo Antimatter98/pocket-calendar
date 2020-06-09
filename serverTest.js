@@ -108,6 +108,12 @@ server.get("/auth/login/success", (req, res) => {
 		cookies: req.cookies
 	  });
 	}
+	else{
+		res.status(401).json({
+			success: false,
+			message: "user failed to authenticate."
+		});
+	}
   });
 
   server.get("/auth/login/failed", (req, res) => {
