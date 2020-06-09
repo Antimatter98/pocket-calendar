@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import Footer from "../../component/footer"
 import Fade from 'react-reveal/Fade';
 import '../../buttons.scss';
-import './index.scss';
-import logo from './save-icon.png';
+//import './index.scss';
+import logo from './save-icon.svg';
 
-export default class App extends Component {
+export default class Indx extends Component {
 	state = {};
 	// constructor(props){
 		

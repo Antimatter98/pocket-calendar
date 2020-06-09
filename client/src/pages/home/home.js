@@ -6,14 +6,14 @@ import { Form, FormGroup, Slider, FormSelect, Modal, ModalBody, ModalHeader } fr
 import {Timepicker} from 'react-timepicker';
 import 'react-timepicker/timepicker.css';
 import '../../buttons.scss';
-import './index.scss';
+//import './index.scss';
 
 import Pulse from 'react-reveal/Pulse';
 
 //const showSecond = false;
 //const str = showSecond ? 'HH:mm:ss' : 'HH:mm';
 
-export default class App extends Component {
+export default class Home extends Component {
 	timeRead = 20;
 	timeHours = 16;
 	timeMins = 0;

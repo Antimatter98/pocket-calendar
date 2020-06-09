@@ -10,7 +10,7 @@ import React, { Component } from "react";
 //import Img from 'react-image'
 import logo from './save-icon.png';
 
-import "./style.css";
+//import "./style.css";
 
 import {
   Navbar,

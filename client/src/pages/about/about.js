@@ -3,11 +3,11 @@ import React, { Component } from "react";
 import Footer from "../../component/footer"
 //import Fade from 'react-reveal/Fade';
 import '../../buttons.scss';
-import './index.scss';
+//import './index.scss';
 import SimpleNav from "../../component/simpleNav";
 
 
-export default class App extends Component {
+export default class About extends Component {
 	state = {};
 	// constructor(props){
 		
