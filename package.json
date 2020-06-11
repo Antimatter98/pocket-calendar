@@ -10,7 +10,7 @@
         "cookie-session": "^1.4.0",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
-        "express": "3.11.0",
+        "express": "3.0.4",
         "firebase-admin": "^8.10.0",
         "googleapis": "^48.0.0",
         "node-cron": "^2.0.3",
