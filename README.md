@@ -11,3 +11,9 @@
   
   <p>The product is hosted here: https://pocket-calendar.herokuapp.com/</p>
 </div>
+
+Tech Stack:
+- NodeJS Backend
+- ReactJS Frontend
+- Cloud Firestore Database
+- Hosted on Heroku
