@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { lazy, Suspense, Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 //import logo from './logo.svg';
 //import './App.css';
@@ -15,13 +15,18 @@ import "firebase/analytics";
 import firestore from "firebase/firestore";
 import firebaseConfig from "./firebaseConfig";
 
-import LandingPage from "./pages/index/indx";
-import UserHomePage from "./pages/home/home";
-import PrivacyPolicy from "./pages/privacy/Privacy";
-import AboutPage from "./pages/about/about";
-import HelpPage from "./pages/help/help";
-
+// import LandingPage from "./pages/index/indx";
+// import UserHomePage from "./pages/home/home";
+// import PrivacyPolicy from "./pages/privacy/Privacy";
+// import AboutPage from "./pages/about/about";
+// import HelpPage from "./pages/help/help";
 import dbFuncs from "./dbAccess";
+
+const LandingPage = lazy(() => import("./pages/index/indx"));
+const UserHomePage = lazy(() => import("./pages/home/home"));
+const PrivacyPolicy = lazy(() => import("./pages/privacy/Privacy"));
+const AboutPage = lazy(() => import("./pages/about/about"));
+const HelpPage = lazy(() => import("./pages/help/help"));
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 firebase.analytics();
@@ -135,88 +140,124 @@ class App extends Component {
 
     return (
       <Switch>
-        <Route
-          path="/"
-          exact
-          render={(props) =>
-            dbFuncs.checkUser(user, db, this.state, this.handleStateChange) ? (
-              <Redirect to="/home" />
-            ) : (
-              <LandingPage
-                {...props}
-                googleAuth={user}
-                onButtonClick={signInWithGoogle}
-              />
-            )
+        <Suspense
+          fallback={
+            <div
+              align="center"
+              style={{
+                backgroundColor: "black",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100vw",
+                height: "100vh",
+              }}
+            >
+              <h3 style={{ color: "white" }}>Waiting for assets...</h3>
+            </div>
+            // <div className="loading-screen" align="center">
+            //   {" "}
+            //   <div className="load-cont">
+            //     {" "}
+            //     <h3 className="text">Waiting for assets...</h3>
+            //     <ReactLoading
+            //       type={"bars"}
+            //       color={"#fff"}
+            //       height={100}
+            //       width={100}
+            //     />{" "}
+            //   </div>{" "}
+            // </div>
           }
-        />
-
-        <Route
-          path="/home"
-          exact
-          render={(props) =>
-            user ? (
-              this.state.dataLoaded ? (
-                <div>
-                  <NavComp
-                    onSignOutClick={handleSignout}
-                    onUnsubscribeClick={handleUnsubscribe}
-                    loggedUser={user}
-                    db={db}
-                  />
-                  <UserHomePage
-                    {...props}
-                    prefSaved={this.state.prefSaved}
-                    resetPrefModal={dbFuncs.resetPrefModal}
-                    loggedUser={user}
-                    loggedPocket={this.state.userPocket}
-                    onButtonClick={dbFuncs.clicked}
-                    timeDailyRead={this.state.timeDailyRead} //change here
-                    timeToSchedule={this.state.timeToSchedule} //change here
-                    timeZone={this.state.timeZone}
-                    pocketExists={this.state.pocketExists}
-                    onPocketButtonClick={this.handlePocketOAuth}
-                    googleExists={this.state.googleExists}
-                    onGoogleCalClick={this.handleGoogleAuth}
-                    onSignOutClick={handleSignout}
-                    pocketOffset={this.state.pocketOffset}
-                    totalUnread={this.state.totalUnread}
-                    db={db}
-                    currentState={this.state}
-                    stateFn={this.handleStateChange}
-                  />
-                  <Footer />
-                </div>
+        >
+          <Route
+            path="/"
+            exact
+            render={(props) =>
+              dbFuncs.checkUser(
+                user,
+                db,
+                this.state,
+                this.handleStateChange
+              ) ? (
+                <Redirect to="/home" />
               ) : (
-                <div className="loading-screen" align="center">
-                  {" "}
-                  <div className="load-cont">
-                    {" "}
-                    <h3 className="text">Almost Ready...</h3>
-                    <ReactLoading
-                      type={"bars"}
-                      color={"#fff"}
-                      height={100}
-                      width={100}
-                    />{" "}
-                  </div>{" "}
-                </div>
+                <LandingPage
+                  {...props}
+                  googleAuth={user}
+                  onButtonClick={signInWithGoogle}
+                />
               )
-            ) : (
-              <Redirect to="/" />
-            )
-          }
-        />
+            }
+          />
 
-        <Route
-          path="/privacy-policy"
-          exact
-          render={(props) => <PrivacyPolicy />}
-        />
+          <Route
+            path="/home"
+            exact
+            render={(props) =>
+              user ? (
+                this.state.dataLoaded ? (
+                  <div>
+                    <NavComp
+                      onSignOutClick={handleSignout}
+                      onUnsubscribeClick={handleUnsubscribe}
+                      loggedUser={user}
+                      db={db}
+                    />
+                    <UserHomePage
+                      {...props}
+                      prefSaved={this.state.prefSaved}
+                      resetPrefModal={dbFuncs.resetPrefModal}
+                      loggedUser={user}
+                      loggedPocket={this.state.userPocket}
+                      onButtonClick={dbFuncs.clicked}
+                      timeDailyRead={this.state.timeDailyRead} //change here
+                      timeToSchedule={this.state.timeToSchedule} //change here
+                      timeZone={this.state.timeZone}
+                      pocketExists={this.state.pocketExists}
+                      onPocketButtonClick={this.handlePocketOAuth}
+                      googleExists={this.state.googleExists}
+                      onGoogleCalClick={this.handleGoogleAuth}
+                      onSignOutClick={handleSignout}
+                      pocketOffset={this.state.pocketOffset}
+                      totalUnread={this.state.totalUnread}
+                      db={db}
+                      currentState={this.state}
+                      stateFn={this.handleStateChange}
+                    />
+                    <Footer />
+                  </div>
+                ) : (
+                  <div className="loading-screen" align="center">
+                    {" "}
+                    <div className="load-cont">
+                      {" "}
+                      <h3 className="text">Almost Ready...</h3>
+                      <ReactLoading
+                        type={"bars"}
+                        color={"#fff"}
+                        height={100}
+                        width={100}
+                      />{" "}
+                    </div>{" "}
+                  </div>
+                )
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          />
 
-        <Route path="/help" exact render={(props) => <HelpPage />} />
+          <Route
+            path="/privacy-policy"
+            exact
+            render={(props) => <PrivacyPolicy />}
+          />
 
-        <Route path="/about" exact render={(props) => <AboutPage />} />
+          <Route path="/help" exact render={(props) => <HelpPage />} />
+
+          <Route path="/about" exact render={(props) => <AboutPage />} />
+        </Suspense>
       </Switch>
     );
   }

@@ -8,6 +8,11 @@ import ReactLoading from "react-loading";
 
 export default class Indx extends Component {
   state = {};
+
+  handleLogoLoad = (e) => {
+    document.getElementsByClassName("logo-main")[0].style = "display: block;";
+  };
+
   render() {
     //console.log(res.session);
     return this.props.googleAuth === undefined ? (
@@ -31,7 +36,13 @@ export default class Indx extends Component {
           <h1 className="title-top" id="top">
             Pocket
           </h1>
-          <img className="logo-main" src={logo} alt="pocket-calendar-logo" />
+          <img
+            className="logo-main"
+            src={logo}
+            alt="pocket-calendar-logo"
+            style={{ display: "block" }}
+            onLoad={this.handleLogoLoad}
+          />
           <h1 className="title-down">Calendar</h1>
           <br />
           <h6 className="text">
