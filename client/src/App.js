@@ -142,32 +142,32 @@ class App extends Component {
       <Switch>
         <Suspense
           fallback={
-            <div
-              align="center"
-              style={{
-                backgroundColor: "black",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100vw",
-                height: "100vh",
-              }}
-            >
-              <h3 style={{ color: "white" }}>Waiting for assets...</h3>
-            </div>
-            // <div className="loading-screen" align="center">
-            //   {" "}
-            //   <div className="load-cont">
-            //     {" "}
-            //     <h3 className="text">Waiting for assets...</h3>
-            //     <ReactLoading
-            //       type={"bars"}
-            //       color={"#fff"}
-            //       height={100}
-            //       width={100}
-            //     />{" "}
-            //   </div>{" "}
+            // <div
+            //   align="center"
+            //   style={{
+            //     backgroundColor: "black",
+            //     display: "flex",
+            //     justifyContent: "center",
+            //     alignItems: "center",
+            //     width: "100vw",
+            //     height: "100vh",
+            //   }}
+            // >
+            //   <h3 style={{ color: "white" }}>Waiting for assets...</h3>
             // </div>
+            <div className="loading-screen" align="center">
+              {" "}
+              <div className="load-cont">
+                {" "}
+                <h3 className="text">Just a moment...</h3>
+                <ReactLoading
+                  type={"bars"}
+                  color={"#fff"}
+                  height={100}
+                  width={100}
+                />{" "}
+              </div>{" "}
+            </div>
           }
         >
           <Route
