@@ -10,9 +10,6 @@ import '../../buttons.scss';
 
 import Pulse from 'react-reveal/Pulse';
 
-//const showSecond = false;
-//const str = showSecond ? 'HH:mm:ss' : 'HH:mm';
-
 export default class Home extends Component {
 	timeRead = 20;
 	timeHours = 16;
@@ -30,41 +27,27 @@ export default class Home extends Component {
 		//console.log(this.state);
 	  }
 
-
-	//   onChange(value) {
-	// 	  console.log(value && value.format(str));
-	//   }
 	  componentDidMount(){
 		  //console.log(this.props.prefSaved);
 		if(this.props.pocketExists && this.props.googleExists){
 			var s = document.getElementById("select-timezone");
 			this.loaded = false;
-			//this.loadEv = false;
-			//console.log(s.options.length);
+			
 			for ( var i = 0; i < s.options.length; i++ ) {
-
 				if ( s.options[i].text === this.props.tim ) {
-		
 					s.options[i].selected = true;
-		
 					break;
-		
 				} 
-			//document.getElementById("select-timezone").value = this.props.timeZone;
-
 			}
 			//console.log("Load complete");
 			this.loaded = true;
 			document.getElementById("select-timezone").value = this.props.timeZone;
-			if((this.props.pocketOffset > 0)){
-				
+			if((this.props.pocketOffset > 0)){	
 				document.getElementById("stats-heading").innerText = "Your Pocket stats: ";
 				document.getElementById("pocket-data").innerText = `Delivered items: ${this.props.pocketOffset}\n Unread items: ${this.props.totalUnread}`;
-
 				if(/*(this.props.pocketOffset === this.props.totalUnread) ||*/ (this.props.totalUnread === 0)){
 					document.getElementById("no-new-pocket-articles").innerText = "There are no new articles to deliver! Do add new articles to your Pocket!";
-				}
-				
+				}	
 			}
 			else{
 				document.getElementById("stats-heading").innerText = 'New users! Make sure you click on "Save Preferences", otherwise articles cannot be delivered to you! \n Old user? Maybe there are no unread items for you!';
@@ -73,40 +56,19 @@ export default class Home extends Component {
 	  }
 
 	  handleSlide(e) {
-		// this.setState({
-		//   value: parseInt(e[0])
-		// });
 		this.timeRead = parseInt(e[0]);
-		// this.setState({
-		// 	timeRead: this.timeRead,
-		// 	Hours: this.state.Hours, 
-		// 	Mins: this.state.Mins
-		// });
 		this.setState(prevState => {
 			return {
 				timeRead: parseInt(e[0])
 			};
 		});
-		//document.getElementById("select-timezone").value = this.props.timeZone;
-		//this.state['timeRead'] = this.timeRead;
 	  }
 
 	  handleSelectChange = () => {
-		  	//console.log(this.value);
-			//var x = 
-			// this.setState({
-			// 	timeZone: document.getElementById("select-timezone").value
-			// });
-			//console.log('Value Selected: ', this.state);
 			if(this.loaded === false){
 				//console.log("Loading...");
 			}
 			else{
-				//console.log("loaded");
-			// 	this.setState({
-			// 	timeZone: document.getElementById("select-timezone").value
-			// });
-			
 			if(this.loadEv === false){
 				document.getElementById("select-timezone").value = this.props.timeZone;
 				//console.log("Now setting true...");
@@ -118,11 +80,8 @@ export default class Home extends Component {
 				this.setState({
 					timeZone: document.getElementById("select-timezone").value
 				})
-				
-				
-					//document.getElementById("select-timezone").value = this.props.timeZone;
 			}
-			//console.log('Value Selected: ', this.state);
+			
 		}
 
 	  }
@@ -149,7 +108,13 @@ export default class Home extends Component {
 		this.setState({
 			open: !this.state.open
 		});
-		this.props.resetPrefModal();
+		let tempParentState = this.props.currState;
+		tempParentState = {
+			...tempParentState,
+			prefSaved: false
+		}
+		this.props.stateFn(tempParentState);
+		//this.props.resetPrefModal();
 	  }
 
 	  toDate(dStr,format) {
@@ -165,13 +130,6 @@ export default class Home extends Component {
 
 	  //used arrow functions, so no need to bind in constructor
 	  onChange = (hours, minutes) => {    
-		//console.log(`${hours}, ${minutes}`);
-		//console.log((Object.keys(this.props.loggedPocket).length !== 0), (this.props.pocketExists));
-		//document.getElementById("select-timezone").value = this.props.timeZone;
-		//console.log('Value Selected: ', document.getElementById("select-timezone").value);
-		// var a = this.props.timeToSchedule;
-		// var b = toDate(a,"h:m")
-		// console.log(b);
 		
 		this.setState(prevState => {
 			return {
@@ -179,17 +137,7 @@ export default class Home extends Component {
 				Mins: minutes
 			};
 		});
-		// this.setState({
-		// 	timeRead: this.timeRead,
-		// 	timeHours: hours, 
-		// 	timeMins: minutes
-		// });
-		//this.timeHours = hours;
-		// this.timeMins = parseInt(minutes[0]);
 	  }
-	//   prefSaved(){
-	// 	  console.log(this.state);
-	//   }
 
 	checkInitPocketLogin(a){
 		//console.log(a);
@@ -318,7 +266,7 @@ export default class Home extends Component {
 						<label className="col-form-label">Current saved timezone in the database is: GMT{this.props.timeZone}</label><br/>
 						<label className="col-form-label">For new accounts timezone saved is: +05:30 (Indian Standard Time) by default.</label>
 					</FormGroup>
-					<button type="button" className="btn btn-primary" onClick={e => {this.setState({timeZone: document.getElementById("select-timezone").value}); console.log(this.state); this.toggle(); this.props.onButtonClick(e, this.state)}}>Save Preferences</button>
+					<button type="button" className="btn btn-primary" onClick={e => {this.setState({timeZone: document.getElementById("select-timezone").value}); console.log(this.state); this.toggle(); this.props.onButtonClick(e, this.state, this.props.loggedUser, this.props.db, this.props.currentState, this.props.stateFn)}}>Save Preferences</button>
 					<br/>
 					
 				</Form>

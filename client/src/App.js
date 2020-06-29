@@ -21,6 +21,8 @@ import PrivacyPolicy from "./pages/privacy/Privacy";
 import AboutPage from "./pages/about/about";
 import HelpPage from "./pages/help/help";
 
+import dbFuncs from "./dbAccess";
+
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 const firebaseAppAuth = firebaseApp.auth();
@@ -64,21 +66,21 @@ class App extends Component {
 
   componentDidMount(){
     //this.testDb();
-
-    this.callPocketAuth()
-      .then(res => {
-        this.setState({
-          authenticated: true,
-          userPocket: res.user
+    if(!this.state.pocketExists){
+      this.callPocketAuth()
+        .then(res => {
+          this.setState({
+            authenticated: true,
+            userPocket: res.user
+          });
+        })
+        .catch(error => {
+          this.setState({
+            authenticated: false,
+            error: "Failed to authenticate user"
+          });
         });
-      })
-      .catch(error => {
-        this.setState({
-          authenticated: false,
-          error: "Failed to authenticate user"
-        });
-      });
-     
+    }
   }
 
   callPocketAuth = async () => {
@@ -104,6 +106,11 @@ class App extends Component {
     window.open("/auth/getpocket", "_self");
   }
 
+  handleStateChange = (st => {
+    this.setState(st);
+    console.log(st);
+  });
+
   render() {
     let {
       user,
@@ -111,137 +118,14 @@ class App extends Component {
       signInWithGoogle,
       //clicked
     } = this.props;
-    
-    const addUsertoDb = async () => {
-      const doc = await db.collection(process.env.REACT_APP_DATABASE_NAME).doc(user.email).get();
-      if(doc.exists){
-        
-        this.setState({
-          timeDailyRead: doc.data().timeDailyRead,
-          timeToSchedule: doc.data().timeToSchedule,
-          timeZone: doc.data().timeZone,
-          pocketOffset: doc.data().offset,
-          totalUnread: doc.data().totalUnread
-        });
-        
-        if(doc.data().pocketAccess){         
-          this.setState({
-            pocketExists: true
-          });
-        }
-        else{
-          if((Object.keys(this.state.userPocket).length !== 0)){
-            //console.log("Adding pocket...");
-            const newDoc = await db.collection(process.env.REACT_APP_DATABASE_NAME).doc(user.email).update({
-              pocketAccess: this.state.userPocket.accessToken
-            });
-            this.setState({
-              pocketExists: true
-            });
-          }
-          else{
-            
-            this.setState({
-              pocketExists: false
-            });
-          }
-        }
-        if(doc.data().googleAccess && doc.data().googleRefresh){
-          
-          this.setState({
-            googleExists: true
-          });
-        }
-        else{
-          
-          this.setState({
-            googleExists: false
-          });
-        }
-        
-        const newDoc = await db.collection(process.env.REACT_APP_DATABASE_NAME).doc(user.email).update({
-          email: user.email,
-          displayName: user.displayName,
-          displayPhoto: user.photoURL,
-         
-        });
-        //console.log("new data: ", newDoc.data());
-        await this.setState({
-          dataLoaded: true
-        });
-        //console.log(user.displayName);
-      }
-      else{        
-        const newDoc = await db.collection(process.env.REACT_APP_DATABASE_NAME).doc(user.email).set({
-          email: user.email,
-          displayName: user.displayName,
-          displayPhoto: user.photoURL,         
-          timeDailyRead: 20,
-          timeToSchedule: "16:00",
-          timeZone: "+05:30",
-          offset: 0,
-          totalUnread: 0
-        });
-        this.setState({
-          dataLoaded: true
-        });
-        
-      }
-    }
 
-    //checkUser here, save data accordingly
-    function checkUser(){
-      if(user){
-        //adding user to db
-        //console.log("checking user...");
-        addUsertoDb();       
-        return true;
-      }
-      else{        
-        return false;
-      }
-    }
-
-    //save preferences clicked, save data accordingly
-    let clicked = async(e, a) => {
-      
-      let modTime = (a.Hours).toString() + ':' + (a.Mins).toString();
-      const doc = await db.collection(process.env.REACT_APP_DATABASE_NAME).doc(user.email).get();
-      if(doc.exists){
-        
-          const newDoc = await db.collection(process.env.REACT_APP_DATABASE_NAME).doc(user.email).update({
-            timeDailyRead: a.timeRead,
-            timeToSchedule: modTime,
-            timeZone: a.timeZone,
-            allDataSet: true
-          });
-          
-          //window.location.reload();
-          this.setState({
-            prefSaved: true
-          });
-        
-      }
-      else{
-        //console.log("error saving pocket to db");
-      }
-    }
-
-    let resetPrefModal = (e) => {
-      window.location.reload();
-      this.setState({
-        prefSaved: false
-      });
-      
-    }
-
-    let handleUnsubscribe = async() => {
-      const newDoc = await db.collection(process.env.REACT_APP_DATABASE_NAME).doc(user.email).delete();
+    let handleSignout = async() => {
       await signOut();
       window.open('/auth/logout', '_self');
     }
 
-    let handleSignout = async() => {
+    let handleUnsubscribe = async() => {
+      const newDoc = await db.collection(process.env.REACT_APP_DATABASE_NAME).doc(user.email).delete();
       await signOut();
       window.open('/auth/logout', '_self');
     }
@@ -252,7 +136,7 @@ class App extends Component {
           path="/"
           exact
           render={props => (
-            checkUser()
+            dbFuncs.checkUser(user, db, this.state, this.handleStateChange)
             ? <Redirect to="/home"/>
             : <LandingPage
               {...props}
@@ -274,14 +158,16 @@ class App extends Component {
                 onUnsubscribeClick={handleUnsubscribe}
                 userPhoto={(user.photoURL).toString()}
                 userName={user.displayName}
+                loggedUser={user}
+                db={db}
               />
                 <UserHomePage
                   {...props}
                   prefSaved={this.state.prefSaved}
-                  resetPrefModal={resetPrefModal}
+                  resetPrefModal={dbFuncs.resetPrefModal}
                   loggedUser={user}
                   loggedPocket={this.state.userPocket}
-                  onButtonClick={clicked}
+                  onButtonClick={dbFuncs.clicked}
                   timeDailyRead={this.state.timeDailyRead} //change here
                   timeToSchedule={this.state.timeToSchedule} //change here
                   timeZone={this.state.timeZone}
@@ -292,6 +178,9 @@ class App extends Component {
                   onSignOutClick={handleSignout}
                   pocketOffset={this.state.pocketOffset}
                   totalUnread={this.state.totalUnread}
+                  db={db}
+                  currentState={this.state}
+                  stateFn={this.handleStateChange}
                 />
                 <Footer/>
               </div>

@@ -48,7 +48,7 @@ export default class NavComp extends Component {
 			dropdownOpen: !this.state.dropdownOpen
 		  }
 		});
-		console.log('"' + this.props.userPhoto + '"');
+		//console.log('"' + this.props.userPhoto + '"');
 	  }
 	
 	  toggleNavbar() {

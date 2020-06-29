@@ -10,6 +10,7 @@ $pocket-active-red: rgb(255, 0, 0);
   background-color: $google-blue;
   border-radius: 2px;
   box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
+  cursor: pointer;
   .google-icon-wrapper {
     position: absolute;
     margin-top: 1px;
@@ -49,6 +50,7 @@ $pocket-active-red: rgb(255, 0, 0);
     background-color: $pocket-red;
     border-radius: 2px;
     box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
+    cursor: pointer;
     .pocket-icon-wrapper {
       position: absolute;
       margin-top: 1px;
