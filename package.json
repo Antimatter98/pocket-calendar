@@ -1,33 +1,38 @@
 {
-    "name": "pocket-calendar-final",
-    "version": "0.1.0",
-    "private": true,
-    "main": "serverTest.js",
-    "dependencies": {
-        "axios": "^0.19.2",
-        "compression": "^1.7.4",
-        "consolidate": "0.5.0",
-        "cookie-parser": "^1.4.5",
-        "cookie-session": "^1.4.0",
-        "cors": "^2.8.5",
-        "dotenv": "^8.2.0",
-        "express": "3.0.4",
-        "firebase-admin": "^8.10.0",
-        "googleapis": "^48.0.0",
-        "node-cron": "^2.0.3",
-        "passport": "0.1.15",
-        "passport-pocket": "1.0.0",
-        "path": "^0.12.7",
-        "request": "2.12.0",
-        "swig": "0.13.2"
-    },
-    "scripts": {
-        "start": "node serverTest.js",
-        "heroku-postbuild": "cd client && npm install && npm run build"
-    },
-    "keywords": [
-        "passport",
-        "pocket",
-        "getpocket"
-    ]
+  "name": "pocket-calendar-final",
+  "version": "0.1.0",
+  "private": true,
+  "main": "server.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "consolidate": "0.15.1",
+    "cookie-parser": "^1.4.5",
+    "cookie-session": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "firebase-admin": "^9.0.0",
+    "googleapis": "^57.0.0",
+    "memorystore": "^1.6.2",
+    "method-override": "^3.0.0",
+    "morgan": "^1.10.0",
+    "node-cron": "^2.0.3",
+    "passport": "0.4.1",
+    "passport-pocket": "1.0.0",
+    "path": "^0.12.7",
+    "request": "2.88.2",
+    "swig": "1.4.2"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "keywords": [
+    "passport",
+    "pocket",
+    "getpocket"
+  ]
 }
