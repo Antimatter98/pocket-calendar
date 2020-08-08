@@ -58,9 +58,9 @@ server.use(passport.initialize());
 server.use(passport.session());
 //server.use(server.router);
 
-server.use("/auth", authRoutes);
+server.use(forceHTTPS);
 
-//server.use(forceHTTPS);
+server.use("/auth", authRoutes);
 
 server.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
