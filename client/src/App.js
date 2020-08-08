@@ -1,7 +1,6 @@
 import React, { lazy, Suspense, Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-//import logo from './logo.svg';
-//import './App.css';
+
 import "./index.css";
 
 import NavComp from "./component/NavComp";
@@ -15,11 +14,6 @@ import "firebase/analytics";
 import firestore from "firebase/firestore";
 import firebaseConfig from "./firebaseConfig";
 
-// import LandingPage from "./pages/index/indx";
-// import UserHomePage from "./pages/home/home";
-// import PrivacyPolicy from "./pages/privacy/Privacy";
-// import AboutPage from "./pages/about/about";
-// import HelpPage from "./pages/help/help";
 import dbFuncs from "./dbAccess";
 
 const LandingPage = lazy(() => import("./pages/index/indx"));
@@ -32,9 +26,6 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 const firebaseAppAuth = firebaseApp.auth();
 const db = firebase.firestore();
-
-//let provider = new firebase.auth.GoogleAuthProvider();
-//provider.addScope('https://www.googleapis.com/auth/calendar.events');
 
 const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
@@ -52,12 +43,7 @@ class App extends Component {
   }
 
   state = {
-    response: "",
-    post: "",
-    responseToPost: "",
     userPocket: {},
-    error: null,
-    authenticated: false,
     timeDailyRead: 20,
     timeToSchedule: "16:00",
     timeZone: "+05:30",
@@ -67,49 +53,17 @@ class App extends Component {
     pocketOffset: 0,
     totalUnread: 0,
     prefSaved: false,
-  };
-
-  componentDidMount() {
-    //this.testDb();
-    if (!this.state.pocketExists) {
-      this.callPocketAuth()
-        .then((res) => {
-          this.setState({
-            authenticated: true,
-            userPocket: res.user,
-          });
-        })
-        .catch((error) => {
-          this.setState({
-            authenticated: false,
-            error: "Failed to authenticate user",
-          });
-        });
-    }
-  }
-
-  callPocketAuth = async () => {
-    const response = await fetch("/auth/login/success", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true,
-      },
-    });
-    const body = await response.json();
-    if (response.status !== 200) throw Error(body);
-    return body;
+    email: "",
   };
 
   handleGoogleAuth() {
     window.open("/auth/google", "_self");
   }
 
-  handlePocketOAuth() {
-    window.open("/auth/getpocket", "_self");
-  }
+  handlePocketOAuth = () => {
+    //console.log(this.state.email);
+    window.open(`/auth/getpocket?key=${btoa(this.state.email)}`, "_self");
+  };
 
   handleStateChange = (st) => {
     this.setState(st);
@@ -142,19 +96,6 @@ class App extends Component {
       <Switch>
         <Suspense
           fallback={
-            // <div
-            //   align="center"
-            //   style={{
-            //     backgroundColor: "black",
-            //     display: "flex",
-            //     justifyContent: "center",
-            //     alignItems: "center",
-            //     width: "100vw",
-            //     height: "100vh",
-            //   }}
-            // >
-            //   <h3 style={{ color: "white" }}>Waiting for assets...</h3>
-            // </div>
             <div className="loading-screen" align="center">
               {" "}
               <div className="load-cont">
