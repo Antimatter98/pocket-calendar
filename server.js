@@ -14,6 +14,7 @@ var morgan = require("morgan");
 const scheduleArticles = require("./scheduler/cronScheduler");
 const authRoutes = require("./routes/authRoutes");
 const passport = require("./controllers/pocketController");
+const forceHTTPS = require("./middlewares/forceHTTPS");
 
 require("dotenv").config();
 
@@ -55,7 +56,8 @@ server.use(
 // persistent login sessions (recommended).
 server.use(passport.initialize());
 server.use(passport.session());
-//server.use(server.router);
+
+//server.use(forceHTTPS);
 
 server.use("/auth", authRoutes);
 
