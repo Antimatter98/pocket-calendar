@@ -56,9 +56,8 @@ server.use(
 // persistent login sessions (recommended).
 server.use(passport.initialize());
 server.use(passport.session());
-//server.use(server.router);
 
-server.use(forceHTTPS);
+//server.use(forceHTTPS);
 
 server.use("/auth", authRoutes);
 

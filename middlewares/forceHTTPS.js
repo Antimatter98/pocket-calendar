@@ -1,6 +1,5 @@
 var express = require("express");
 require("dotenv").config();
-
 module.exports = function (req, res, next) {
   if (process.env.NODE_ENV === "production") {
     if (req.headers["x-forwarded-proto"] !== "https") {
