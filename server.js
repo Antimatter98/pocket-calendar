@@ -34,6 +34,11 @@ server.use(
   })
 );
 server.use(compression());
+
+server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.json());
+server.use(morgan("combined"));
+
 server.use(
   session({
     cookie: { maxAge: 86400000 },
@@ -41,13 +46,10 @@ server.use(
       checkPeriod: 86400000, // prune expired entries every 24h
     }),
     secret: process.env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: false,
   })
 );
-server.use(bodyParser.urlencoded({ extended: false }));
-server.use(bodyParser.json());
-server.use(morgan("combined"));
 
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
