@@ -11,7 +11,7 @@ var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
 var morgan = require("morgan");
 
-const scheduleArticles = require("./scheduler/cronScheduler");
+const scheduleArticles = require("./scheduler/scheduler");
 const authRoutes = require("./routes/authRoutes");
 const passport = require("./controllers/pocketController");
 const forceHTTPS = require("./middlewares/forceHTTPS");
