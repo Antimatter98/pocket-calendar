@@ -1,64 +1,15 @@
-var express = require("express");
-var path = require("path");
-var cron = require("node-cron");
-
-const db = require("../extras/firebaseForNode");
-
 const { google } = require("googleapis");
-var client = require("../extras/clientSecret");
-var googleController = require("../controllers/googleController");
-
-var axios = require("axios");
-
 require("dotenv").config();
 
-CLIENT_HOME_PAGE_URL = process.env.CLIENT_HOMEPAGE_URL;
+var client = require("../extras/clientSecret");
+const { fetchArticles, tagArticles } = require("./callPocketAPI");
+const { updateOffset } = require("./dbAccessHelpers");
 
-let users = [];
-
-let googleAccess = "";
-let googleRefresh = "";
-let hours;
-let minutes;
-let pocketAccess;
-let timeDailyRead;
-let timeZone;
-let offset;
-let email;
-let totalUnread;
-
-async function fetchArticles(pocketAccess, offset) {
-  let p = await axios.get("https://getpocket.com/v3/get", {
-    params: {
-      consumer_key: process.env.POCKET_CONSUMER_KEY,
-      access_token: pocketAccess,
-      state: "unread",
-      //offset: offset,
-      //count: 15,
-      //tag: '_untagged_',
-      sort: "oldest",
-      contentType: "article",
-      detailType: "complete",
-    },
-  });
-  return p;
-}
-
-async function tagArticles(pocketAccess, articleList) {
-  let p = await axios.post(
-    "https://getpocket.com/v3/send?actions=" +
-      encodeURIComponent(JSON.stringify(articleList)) +
-      "&access_token=" +
-      pocketAccess +
-      "&consumer_key=" +
-      process.env.POCKET_CONSUMER_KEY
-  );
-
-  return p;
-}
-
-const createGCalEvent = async (
+exports.createGCalEvent = async (
+  pocketAccess,
+  timeDailyRead,
   timeZone,
+  email,
   freeList,
   calendar,
   pocketArticles,
@@ -68,7 +19,6 @@ const createGCalEvent = async (
   temp
 ) => {
   try {
-    //console.log(pocketArticles);
     if (pocketArticles.length > 0) {
       let startTime;
       let endTime;
@@ -118,57 +68,40 @@ const createGCalEvent = async (
         let pocketModifyResult = await tagArticles(pocketAccess, pocketModify);
         if (pocketModifyResult.data) {
           console.log("added tags successfully");
-          try {
-            const doc = await db
-              .collection(process.env.DATABASE_NAME)
-              .doc(email)
-              .update({
-                offset: newOffset,
-                totalUnread: Object.keys(temp).length - newOffset,
-              });
-            email = "";
-          } catch (error) {
-            console.log("Error saving updated data to database: " + error);
-            //continue;
-          }
+          await updateOffset(
+            email,
+            newOffset,
+            Object.keys(temp).length - newOffset
+          );
         } else {
-          console.log("Error with modifying pocket tag");
+          console.log("\nError with modifying pocket tag");
         }
       } catch (error) {
-        console.log("Pocket API modify tag error: ", error);
+        throw "\nPocket API modify tag error: " + error;
       }
     } else {
       console.log("Empty pocket");
-      //if(offset > totalUnread){
-      try {
-        const doc = await db
-          .collection(process.env.DATABASE_NAME)
-          .doc(email)
-          .update({
-            offset: newOffset,
-            totalUnread: Object.keys(temp).length - newOffset,
-          });
-        //email = "";
-      } catch (error) {
-        console.log("Error saving updated data to database: " + error);
-        //continue;
-      }
-      //}
-      //continue;
+      await updateOffset(
+        email,
+        newOffset,
+        Object.keys(temp).length - newOffset
+      );
     }
-  } catch (error) {
-    console.log("Some error in creating event: " + error);
-    //continue;
+  } catch (err) {
+    throw "\nSome error in creating event: " + error;
   }
 };
 
-const retrievePocketArticles = async (timeZone, freeList, calendar) => {
+exports.retrievePocketArticles = async (
+  pocketAccess,
+  timeDailyRead,
+  offset
+) => {
   let pocketArticles = [];
   try {
     let pockets = await fetchArticles(pocketAccess, offset);
     if (pockets) {
       let timeScheduling = 0;
-
       let counter = 0;
       let newOffset = 0;
       let temp = pockets.data.list;
@@ -214,35 +147,35 @@ const retrievePocketArticles = async (timeZone, freeList, calendar) => {
             "https://app.getpocket.com/read/" + key
           }\n`;
         }
-
         timeScheduling += temp[key].word_count / 180;
         counter += 1;
         newOffset += 1;
       }
       pocketArticlesDesc +=
         "\nPro Tip: Reading these articles using the pocket WebApp link provided gives you more manual control over what you want to do after reading an article (eg. Archiving it manually just after finishing reading!)\nTo access these articles, make sure you are logged in using the same pocket account you use with Pocket-Calendar.\n";
-
-      await createGCalEvent(
-        timeZone,
-        freeList,
-        calendar,
+      return {
         pocketArticles,
         pocketArticlesDesc,
         pocketModify,
         newOffset,
-        temp
-      );
+        temp,
+      };
     } else {
       console.log("Pocket API error");
-      //continue;
     }
-  } catch (error) {
-    console.log("Pocket API error: " + error);
-    //continue;
+  } catch (err) {
+    throw "Pocket API error: " + err;
   }
 };
 
-const calcFreeTime = async () => {
+exports.calcFreeTime = async (
+  googleAccess,
+  googleRefresh,
+  timeDailyRead,
+  timeZone,
+  hours,
+  minutes
+) => {
   const { client_secret, client_id, redirect_uris } = client.client.web;
   oAuth2Client = new google.auth.OAuth2(
     client_id,
@@ -254,17 +187,16 @@ const calcFreeTime = async () => {
     access_token: googleAccess,
   };
 
+  let calEvents = [];
+  let freeList = [];
   try {
     const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
-    let calEvents = [];
-    let freeList = [];
-
     {
       /* TIMEZONE OF SERVER MIGHT BE CONSIDERED WHEN SETTING DT AND TMRW
-    //important!!
-    //timezone issue might persist here (for dt and tmrw)
-    //since the timezone value is taken directly from the times obtained from the user's google calendar 
-    */
+        //important!!
+        //timezone issue might persist here (for dt and tmrw)
+        //since the timezone value is taken directly from the times obtained from the user's google calendar 
+        */
     }
     let dtCal = new Date();
     //dt = new Date(dt.toISOString().split('Z')[0] + timeZone);
@@ -296,13 +228,11 @@ const calcFreeTime = async () => {
 
     let tmrw = new Date(dt);
     tmrw.setDate(tmrw.getDate() + 1);
-
     let tmrwCal = new Date(dtCal);
     tmrwCal.setDate(tmrwCal.getDate() + 1);
 
     console.log(dt);
     console.log(tmrw);
-
     console.log(dtCal);
     console.log(dtCal);
     //console.log(dtCal.toISOString());
@@ -316,6 +246,7 @@ const calcFreeTime = async () => {
       orderBy: "startTime",
     });
     console.log("=> ", timeZone);
+
     const events = res.data.items;
     if (events.length) {
       console.log("Upcoming 10 events:");
@@ -337,7 +268,6 @@ const calcFreeTime = async () => {
     console.log("Check the busy events list");
 
     let ctr = 0; //used for freelist
-
     //calculate free time
     console.log("free time list");
     let i;
@@ -348,16 +278,16 @@ const calcFreeTime = async () => {
     console.log(tmp);
 
     //IF 1 OR NONE CAL EVENTS
-    //IF 1
-    //IF CAL FREE AT USER'S TIME
-    //SCHEDULE AT USER'S TIME
+    //  IF 1
+    //      IF CAL FREE AT USER'S TIME
+    //          SCHEDULE AT USER'S TIME
+    //      ELSE
+    //          SCHEDULE AFTER EVENT OVER
+    //  ELSE
+    //      SCHEDULE AT USER'S TIME
     //ELSE
-    //SCHEDULE AFTER EVENT OVER
-    //ELSE
-    //SCHEDULE AT USER'S TIME
-    //ELSE
-    //ITERATE THROUGH CAL EVENTS LIST
-    //CHECK FOR FREE TIME BETWEEN EVENTS (BY CALC TIME DIFF)
+    //  ITERATE THROUGH CAL EVENTS LIST
+    //      CHECK FOR FREE TIME BETWEEN EVENTS (BY CALC TIME DIFF)
 
     if (calEvents.length <= 1) {
       console.log("less");
@@ -380,8 +310,6 @@ const calcFreeTime = async () => {
     } else {
       while (new Date(tmp) < new Date(tmrw) && freeList.length < 1) {
         for (i = t; i < calEvents.length - 1; i++) {
-          //should have been a while loop here... :)
-
           if (i === 0) {
             if (
               new Date(calEvents[0].end) > new Date(tmp) &&
@@ -410,10 +338,8 @@ const calcFreeTime = async () => {
               60000 * timeDailyRead
             ) {
               freeList[ctr] = calEvents[i].end;
-
               ctr = ctr + 1;
               t = i + 1;
-
               console.log("pushed time: " + calEvents[i].end);
               break;
             }
@@ -432,71 +358,11 @@ const calcFreeTime = async () => {
       freeList.forEach((e) => console.log(e));
     }
     console.log("Done");
-
     console.log(freeList);
     console.log("Time Zone: ", timeZone);
 
-    await retrievePocketArticles(timeZone, freeList, calendar);
-  } catch (error) {
-    console.log("The API returned an error: " + error);
-    //continue;
+    return { freeList, calendar };
+  } catch (err) {
+    throw "The API returned an error: " + err;
   }
 };
-
-//MAIN FUNCTION CALLED BY CRON
-const scheduleArticles = async () => {
-  console.log("Im scheduling all articles now...");
-
-  try {
-    const newDoc = await db.collection(process.env.DATABASE_NAME).get();
-
-    newDoc.forEach((doc) => {
-      if (doc.data().allDataSet) {
-        console.log("Pushing: ", doc.data());
-        users.push(doc.data());
-      }
-    });
-    for (let k = 0; k < users.length; k++) {
-      try {
-        console.log("Scheduling...");
-
-        const doc = users[k];
-        if (doc) {
-          console.log("you exist");
-          console.log(doc);
-
-          googleAccess = doc.googleAccess;
-          googleRefresh = doc.googleRefresh;
-          pocketAccess = doc.pocketAccess;
-          [hours, minutes] = doc.timeToSchedule.split(":");
-          timeDailyRead = doc.timeDailyRead;
-          timeZone = doc.timeZone;
-          offset = doc.offset;
-          email = doc.email;
-          totalUnread = doc.totalUnread;
-          console.log(
-            googleAccess,
-            googleRefresh,
-            hours,
-            minutes,
-            pocketAccess
-          );
-
-          await calcFreeTime();
-        } else {
-          console.log("Doesn't exist");
-          //continue;
-        }
-      } catch (error) {
-        console.log(error);
-        //continue;
-      }
-    }
-  } catch (error) {
-    console.log("Error accessing db: ", error);
-  }
-  // })();
-  //}
-};
-
-module.exports = scheduleArticles;
