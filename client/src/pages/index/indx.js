@@ -44,7 +44,6 @@ export default class Indx extends Component {
             onLoad={this.handleLogoLoad}
           />
           <h1 className="title-down">Calendar</h1>
-          <br />
           <h6 className="text">
             Your pocket bookmarks delivered straight to your google calendar
           </h6>
@@ -76,15 +75,15 @@ export default class Indx extends Component {
             enabled in your browser.
           </p>
           <p className="cookie-text">
-            <a href="/help" className="link-index">
+            <a href="/help" className="link">
               <u>For more help, click here</u>
             </a>
           </p>
           {/* <p className="text">Scroll Down for More Info</p> */}
-          <div className="section"> </div>
+          {/* <div className="section"> </div> */}
           {/* <div></div> */}
         </div>
-        <div className="home-details-1 text">
+        <div className="home-alt text">
           <div className="content-data">
             <h3 className="text">What is Pocket Calendar all about?</h3>
             <p>
@@ -103,7 +102,7 @@ export default class Indx extends Component {
             </p>
           </div>
         </div>
-        <div className="home-details-2 text">
+        <div className="home text">
           <div className="content-data">
             <h3 className="text">Signing up is just 4 steps away...</h3>
             <p>1. Sign up with your Google account</p>
@@ -118,12 +117,13 @@ export default class Indx extends Component {
           <p>
             For more clarity on what data is collected and how it is used, read
             the{" "}
-            <a href="/privacy-policy" className="link-index">
+            <a href="/privacy-policy" className="text">
               <u>Privacy policy</u>
             </a>
           </p>
           <br />
           <p>So what are you waiting for? Sign up for Pocket Calendar now!</p>
+          <br />
           {/* <a href="#top" className="text"> ^ Scroll to top</a> */}
         </div>
         {/* </Fade> */}
