@@ -174,7 +174,7 @@ code {
   padding-top: 17px;
 }
 
-@media only screen and (max-height: 700px) {
+@media only screen and (max-height: 800px) {
   .title-top {
     padding-top: 1.5em;
   }

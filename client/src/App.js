@@ -16,7 +16,8 @@ import firebaseConfig from "./firebaseConfig";
 
 import dbFuncs from "./dbAccess";
 
-const LandingPage = lazy(() => import("./pages/index/indx"));
+//const LandingPage = lazy(() => import("./pages/landing/indx"));
+const LandingPage = lazy(() => import("./pages/landing/Landing"));
 const UserHomePage = lazy(() => import("./pages/home/home"));
 const PrivacyPolicy = lazy(() => import("./pages/privacy/Privacy"));
 const AboutPage = lazy(() => import("./pages/about/about"));
@@ -28,7 +29,7 @@ const firebaseAppAuth = firebaseApp.auth();
 const db = firebase.firestore();
 
 const providers = {
-  googleProvider: new firebase.auth.GoogleAuthProvider(),
+  googleProvider: new firebase.auth.GoogleAuthProvider()
 };
 
 //adding scopes
@@ -53,7 +54,7 @@ class App extends Component {
     pocketOffset: 0,
     totalUnread: 0,
     prefSaved: false,
-    email: "",
+    email: ""
   };
 
   handleGoogleAuth() {
@@ -74,7 +75,7 @@ class App extends Component {
     let {
       user,
       signOut,
-      signInWithGoogle,
+      signInWithGoogle
       //clicked
     } = this.props;
 
@@ -208,5 +209,5 @@ export default withFirebaseAuth({
   providers,
   firebaseAppAuth,
   db,
-  firebase,
+  firebase
 })(App);
