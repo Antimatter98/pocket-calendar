@@ -13,6 +13,7 @@ const About = () => {
             items to their pocket account and may forget to checkout these items
             again.
           </p>
+
           <p>
             This WebApp schedules unread items from the users' pocket account to
             his/her Google Calendar so that they can check them out their own

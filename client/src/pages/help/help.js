@@ -71,6 +71,7 @@ const Help = () => {
             </p>
           </li>
           <br />
+
           <br />
           <li>
             <h6 className="text-privacy">
