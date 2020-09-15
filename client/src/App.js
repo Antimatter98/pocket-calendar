@@ -20,8 +20,8 @@ import dbFuncs from "./dbAccess";
 const LandingPage = lazy(() => import("./pages/landing/Landing"));
 const UserHomePage = lazy(() => import("./pages/home/home"));
 const PrivacyPolicy = lazy(() => import("./pages/privacy/Privacy"));
-const AboutPage = lazy(() => import("./pages/about/about"));
-const HelpPage = lazy(() => import("./pages/help/help"));
+const AboutPage = lazy(() => import("./pages/about/About"));
+const HelpPage = lazy(() => import("./pages/help/Help"));
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 firebase.analytics();
