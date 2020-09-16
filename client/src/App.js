@@ -149,6 +149,8 @@ class App extends Component {
                     db={db}
                     currentState={this.state}
                     stateFn={this.handleStateChange}
+                    handleSignout={handleSignout}
+                    handleUnsubscribe={handleUnsubscribe}
                   />
                 ) : (
                   <div className="loading-screen" align="center">
