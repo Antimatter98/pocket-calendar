@@ -1,0 +1,134 @@
+[
+  {
+    "value": "-10:00",
+    "text": "(GMT-10:00) Pacific/Honolulu: Hawaii Time"
+  },
+  {
+    "value": "-09:00",
+    "text": "(GMT-09:00) America/Anchorage: Alaska Time, Pacific/Gambier"
+  },
+  {
+    "value": "-08:00",
+    "text": "(GMT-08:00) America/Los_Angeles: Pacific Time, America/Vancouver: Pacific Time - Vancouver"
+  },
+  {
+    "value": "-07:00",
+    "text": "(GMT-07:00) America/Dawson_Creek: Mountain Time - Dawson Creek, America/Denver: Mountain Time, America/Phoenix: Mountain Time - Arizona"
+  },
+  {
+    "value": "-06:00",
+    "text": "(GMT-06:00) America/Chicago: Central Time, America/Costa_Rica, America/El_Salvador, America/Mexico_City: Central Time - Mexico City, America/Winnipeg: Central Time - Winnipeg"
+  },
+  {
+    "value": "-05:00",
+    "text": "(GMT-05:00) America/Cayman, America/Havana, America/Iqaluit: Eastern Time - Iqaluit, America/Jamaica, America/Lima, America/New_York: Eastern Time, America/Panama, America/Toronto: Eastern Time - Toronto, Pacific/Easter: Easter Island"
+  },
+  {
+    "value": "-04:30",
+    "text": "(GMT-04:30) America/Caracas"
+  },
+  {
+    "value": "-04:00",
+    "text": "(GMT-04:00) America/Barbados, America/Boa_Vista, America/Guyana, America/Port_of_Spain, America/Porto_Velho, America/Puerto_Rico, America/Santo_Domingo, Atlantic/Bermuda"
+  },
+  {
+    "value": "-03:30",
+    "text": "(GMT-03:30) America/St_Johns: Newfoundland Time - St. Johns"
+  },
+  {
+    "value": "-03:00",
+    "text": "(GMT-03:00) America/Argentina/Buenos_Aires, Atlantic/Stanley"
+  },
+  {
+    "value": "-02:00",
+    "text": "(GMT-02:00) America/Noronha, America/Sao_Paulo, Atlantic/South_Georgia"
+  },
+  {
+    "value": "-01:00",
+    "text": "(GMT-01:00) America/Scoresbysund, Atlantic/Azores, Atlantic/Cape_Verde"
+  },
+  {
+    "value": "+00:00",
+    "text": "(GMT+00:00) Europe/Dublin, Europe/Lisbon, Europe/London"
+  },
+  {
+    "value": "+01:00",
+    "text": "(GMT+01:00) Europe/Amsterdam, Europe/Berlin, Europe/Brussels, Europe/Budapest, Europe/Luxembourg, Europe/Madrid, Europe/Malta, Europe/Monaco, Europe/Oslo, Europe/Paris, Europe/Prague, Europe/Rome, Europe/Stockholm, Europe/Tirane, Europe/Vienna, Europe/Warsaw, Europe/Zurich"
+  },
+  {
+    "value": "+02:00",
+    "text": "(GMT+02:00) Africa/Cairo, Africa/Johannesburg, Asia/Jerusalem, Europe/Athens, Europe/Bucharest, Europe/Istanbul"
+  },
+  {
+    "value": "+03:00",
+    "text": "(GMT+03:00) Africa/Nairobi, Asia/Baghdad, Asia/Qatar, Asia/Riyadh, Europe/Moscow"
+  },
+  {
+    "value": "+03:30",
+    "text": "(GMT+03:30) Asia/Tehran"
+  },
+  {
+    "value": "+04:00",
+    "text": "(GMT+04:00) Asia/Dubai, Indian/Mauritius"
+  },
+  {
+    "value": "+04:30",
+    "text": "(GMT+04:30) Asia/Kabul"
+  },
+  {
+    "value": "+05:00",
+    "text": "(GMT+05:00) Asia/Karachi, Indian/Maldives"
+  },
+  {
+    "value": "+05:30",
+    "text": "(GMT+05:30) Asia/Calcutta: India Standard Time, Asia/Colombo"
+  },
+  {
+    "value": "+05:45",
+    "text": "(GMT+05:45) Asia/Katmandu"
+  },
+  {
+    "value": "+06:00",
+    "text": "(GMT+06:00) Asia/Dhaka, Asia/Thimphu"
+  },
+  {
+    "value": "+07:00",
+    "text": "(GMT+07:00) Asia/Bangkok, Asia/Jakarta"
+  },
+  {
+    "value": "+08:00",
+    "text": "(GMT+08:00) Asia/Hong_Kong, Asia/Kuala_Lumpur, Asia/Macau, Asia/Manila, Asia/Shanghai: China Time - Beijing, Asia/Singapore,Asia/Taipei, Australia/Perth: Western Time - Perth"
+  },
+  {
+    "value": "+08:30",
+    "text": "(GMT+08:30) Asia/Pyongyang"
+  },
+  {
+    "value": "+09:00",
+    "text": "(GMT+09:00) Asia/Seoul, Asia/Tokyo, Asia/Yakutsk, Pacific/Palau"
+  },
+  {
+    "value": "+09:30",
+    "text": "(GMT+09:30) Australia/Darwin: Central Time - Darwin"
+  },
+  {
+    "value": "+10:00",
+    "text": "(GMT+10:00) Australia/Brisbane: Eastern Time - Brisbane"
+  },
+  {
+    "value": "+10:30",
+    "text": "(GMT+10:30) Australia/Adelaide: Central Time - Adelaide"
+  },
+  {
+    "value": "+11:00",
+    "text": "(GMT+11:00) Australia/Hobart: Eastern Time - Hobart, Australia/Sydney: Eastern Time - Melbourne, Sydney"
+  },
+  {
+    "value": "+12:00",
+    "text": "(GMT+12:00) Asia/Kamchatka: Moscow+09 - Petropavlovsk-Kamchatskiy"
+  },
+  {
+    "value": "+13:00",
+    "text": "(GMT+13:00) Pacific/Auckland: Auckland, Pacific/Fiji"
+  }
+]

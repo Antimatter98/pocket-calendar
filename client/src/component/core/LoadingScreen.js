@@ -1,6 +1,7 @@
 import React from "react";
 import ReactLoading from "react-loading";
 
+//Base component for Loading screen [used by landing page]
 const LoadingScreen = () => {
   return (
     <div className="loading-screen" align="center">

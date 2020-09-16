@@ -43,6 +43,7 @@ const Help = () => {
                 <a
                   href="https://security.google.com/settings/security/permissions"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <u>Go to your Google account's security page from here</u>
                 </a>{" "}

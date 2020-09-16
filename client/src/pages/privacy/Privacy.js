@@ -34,15 +34,29 @@ const Privacy = () => {
         </p>
         <ul>
           <li>
-            <a href="https://firebase.google.com/support/privacy">Firebase</a>
+            <a
+              href="https://firebase.google.com/support/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Firebase
+            </a>
           </li>
           <li>
-            <a href="https://firebase.google.com/policies/analytics">
+            <a
+              href="https://firebase.google.com/policies/analytics"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Google Analytics for Firebase
             </a>
           </li>
           <li>
-            <a href="https://devcenter.heroku.com/articles/security-privacy-compliance">
+            <a
+              href="https://devcenter.heroku.com/articles/security-privacy-compliance"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Heroku
             </a>
           </li>
@@ -181,7 +195,13 @@ const Privacy = () => {
         <h3 className="text-privacy">Contact Details</h3>
         <p>
           If you have any questions or suggestions, feel free to contact{" "}
-          <a href="mailto:nishanttilve@gmail.com">nishanttilve@gmail.com</a>
+          <a
+            href="mailto:nishanttilve@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            nishanttilve@gmail.com
+          </a>
         </p>
       </div>
     </MiscBase>

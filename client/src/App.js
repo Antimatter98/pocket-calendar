@@ -139,36 +139,17 @@ class App extends Component {
             render={(props) =>
               user ? (
                 this.state.dataLoaded ? (
-                  <div>
-                    <NavComp
-                      onSignOutClick={handleSignout}
-                      onUnsubscribeClick={handleUnsubscribe}
-                      loggedUser={user}
-                      db={db}
-                    />
-                    <UserHomePage
-                      {...props}
-                      prefSaved={this.state.prefSaved}
-                      resetPrefModal={dbFuncs.resetPrefModal}
-                      loggedUser={user}
-                      loggedPocket={this.state.userPocket}
-                      onButtonClick={dbFuncs.clicked}
-                      timeDailyRead={this.state.timeDailyRead} //change here
-                      timeToSchedule={this.state.timeToSchedule} //change here
-                      timeZone={this.state.timeZone}
-                      pocketExists={this.state.pocketExists}
-                      onPocketButtonClick={this.handlePocketOAuth}
-                      googleExists={this.state.googleExists}
-                      onGoogleCalClick={this.handleGoogleAuth}
-                      onSignOutClick={handleSignout}
-                      pocketOffset={this.state.pocketOffset}
-                      totalUnread={this.state.totalUnread}
-                      db={db}
-                      currentState={this.state}
-                      stateFn={this.handleStateChange}
-                    />
-                    <Footer />
-                  </div>
+                  <UserHomePage
+                    {...props}
+                    resetPrefModal={dbFuncs.resetPrefModal}
+                    loggedUser={user}
+                    onButtonClick={dbFuncs.clicked}
+                    onPocketButtonClick={this.handlePocketOAuth}
+                    onGoogleCalClick={this.handleGoogleAuth}
+                    db={db}
+                    currentState={this.state}
+                    stateFn={this.handleStateChange}
+                  />
                 ) : (
                   <div className="loading-screen" align="center">
                     {" "}
