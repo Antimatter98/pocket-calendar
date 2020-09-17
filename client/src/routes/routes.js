@@ -74,7 +74,6 @@ const routes = ({
           <Route path="/privacy-policy" exact component={PrivacyPolicy} />
           <Route path="/help" exact component={HelpPage} />
           <Route path="/about" exact component={AboutPage} />
-          <Redirect to="/" />
         </Suspense>
       </Switch>
     </Router>
