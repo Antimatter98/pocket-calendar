@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, withRouter } from "react-router-dom";
 
 import MiscBase from "../../component/core/MiscBase";
 
@@ -38,9 +39,9 @@ const About = () => {
         <p>
           For more clarity on what data is collected and how it is used, read
           the{" "}
-          <a href="/privacy-policy" className="text">
+          <Link to="/privacy-policy" className="text">
             <u>Privacy policy</u>
-          </a>
+          </Link>
         </p>
         <br />
         {/* <a href="#top" className="text"> ^ Scroll to top</a> */}
@@ -49,4 +50,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default withRouter(About);

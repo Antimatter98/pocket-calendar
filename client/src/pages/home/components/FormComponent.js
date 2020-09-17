@@ -3,8 +3,6 @@ import { Form, FormGroup, Slider, FormSelect } from "shards-react";
 import { Timepicker } from "react-timepicker";
 import "react-timepicker/timepicker.css";
 
-import "../../../buttons.scss";
-
 //load values for timezone dropdown
 const timeZoneData = require("./timezones.json");
 

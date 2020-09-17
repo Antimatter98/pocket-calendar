@@ -1,7 +1,6 @@
 import React from "react";
 import Pulse from "react-reveal/Pulse";
-
-import "../../../buttons.scss";
+import { Link, withRouter } from "react-router-dom";
 
 const ConnectGoogle = ({ onGoogleCalClick }) => {
   return (
@@ -32,7 +31,7 @@ const ConnectGoogle = ({ onGoogleCalClick }) => {
           </h6>
           <p className="text-user">
             For more clarity on what data is collected and how it is used, read
-            the <a href="/privacy-policy">Privacy policy</a>
+            the <Link to="/privacy-policy">Privacy policy</Link>
           </p>
           {/* <h6 className="text-user">*If any problem persists, click on the profile icon to unsubscribe and signup again for the service*</h6> */}
         </Pulse>
@@ -41,4 +40,4 @@ const ConnectGoogle = ({ onGoogleCalClick }) => {
   );
 };
 
-export default ConnectGoogle;
+export default withRouter(ConnectGoogle);

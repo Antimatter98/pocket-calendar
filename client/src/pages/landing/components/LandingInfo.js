@@ -1,8 +1,9 @@
 import React from "react";
+import { Link, withRouter } from "react-router-dom";
 
 const LandingInfo = () => {
   return (
-    <div>
+    <React.Fragment>
       <div className="home-alt text">
         <div className="content-data">
           <h3 className="text">What is Pocket Calendar all about?</h3>
@@ -37,17 +38,17 @@ const LandingInfo = () => {
         <p>
           For more clarity on what data is collected and how it is used, read
           the{" "}
-          <a href="/privacy-policy" className="text">
+          <Link to="/privacy-policy" className="text">
             <u>Privacy policy</u>
-          </a>
+          </Link>
         </p>
         <br />
         <p>So what are you waiting for? Sign up for Pocket Calendar now!</p>
         <br />
         {/* <a href="#top" className="text"> ^ Scroll to top</a> */}
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 
-export default LandingInfo;
+export default withRouter(LandingInfo);

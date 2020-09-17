@@ -1,6 +1,6 @@
 import React from "react";
+import { Link, withRouter } from "react-router-dom";
 
-import "../../../buttons.scss";
 import logo from "../save-icon.svg";
 
 const LandingMain = ({ onButtonClick }) => {
@@ -24,8 +24,6 @@ const LandingMain = ({ onButtonClick }) => {
       <h6 className="text">
         Your pocket bookmarks delivered straight to your google calendar
       </h6>
-      {/* <button onClick={e => this.props.onButtonClick(e, this.state)}>
-        			</button> */}
       <div className="google-btn" onClick={(e) => onButtonClick(e, {})}>
         <div className="google-icon-wrapper">
           <img
@@ -40,21 +38,21 @@ const LandingMain = ({ onButtonClick }) => {
       </div>
       <p className="link">
         By Signing up, you agree to the{" "}
-        <a href="/privacy-policy" className="link">
+        <Link to="/privacy-policy" className="link">
           <u>Privacy Policy</u>
-        </a>
+        </Link>
       </p>
       <p className="cookie-text">
         Issues with signin or signup? Make sure 3rd party cookies are enabled in
         your browser.
       </p>
       <p className="cookie-text">
-        <a href="/help" className="link">
+        <Link to="/help" className="link">
           <u>For more help, click here</u>
-        </a>
+        </Link>
       </p>
     </div>
   );
 };
 
-export default LandingMain;
+export default withRouter(LandingMain);

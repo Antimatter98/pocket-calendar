@@ -1,4 +1,6 @@
 import React from "react";
+import { Link, withRouter } from "react-router-dom";
+
 import MiscBase from "../../component/core/MiscBase";
 
 const Help = () => {
@@ -66,9 +68,9 @@ const Help = () => {
               Make sure 3rd party cookies are enabled in your browser's
               settings. These are required to be enabled to make the 3rd party
               services we use run properly. Check out the{" "}
-              <a href="/privacy-policy">
+              <Link to="/privacy-policy">
                 <u>Privacy Policy</u>
-              </a>
+              </Link>
             </p>
           </li>
           <br />
@@ -108,4 +110,4 @@ const Help = () => {
   );
 };
 
-export default Help;
+export default withRouter(Help);

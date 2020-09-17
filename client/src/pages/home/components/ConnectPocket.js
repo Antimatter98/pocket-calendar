@@ -1,7 +1,6 @@
 import React from "react";
 import Pulse from "react-reveal/Pulse";
-
-import "../../../buttons.scss";
+import { Link, withRouter } from "react-router-dom";
 
 const ConnectPocket = ({ onPocketButtonClick }) => {
   return (
@@ -25,11 +24,11 @@ const ConnectPocket = ({ onPocketButtonClick }) => {
         </div>
         <p className="text-user">
           For more clarity on what data is collected and how it is used, read
-          the <a href="/privacy-policy">Privacy policy</a>
+          the <Link to="/privacy-policy">Privacy policy</Link>
         </p>
       </div>
     </Pulse>
   );
 };
 
-export default ConnectPocket;
+export default withRouter(ConnectPocket);
