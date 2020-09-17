@@ -1,8 +1,4 @@
 import React, { Component } from "react";
-import logo from "./save-icon.png";
-
-//import "./style.css";
-
 import {
   Navbar,
   NavbarToggler,
@@ -14,44 +10,39 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Collapse,
+  Collapse
 } from "shards-react";
 
-//import logo from "src/pages/react-multi.png"
+import logo from "./save-icon.png";
 
 export default class NavComp extends Component {
   constructor(props) {
     super(props);
-
-    this.toggleDropdown = this.toggleDropdown.bind(this);
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-
     this.state = {
       dropdownOpen: false,
-      collapseOpen: false,
+      collapseOpen: false
     };
   }
 
-  toggleDropdown() {
+  //handle dropdown and navbar states
+  toggleDropdown = () => {
     this.setState({
       ...this.state,
       ...{
-        dropdownOpen: !this.state.dropdownOpen,
-      },
+        dropdownOpen: !this.state.dropdownOpen
+      }
     });
-    //console.log('"' + this.props.userPhoto + '"');
-  }
+  };
 
-  toggleNavbar() {
+  toggleNavbar = () => {
     this.setState({
       ...this.state,
       ...{
-        collapseOpen: !this.state.collapseOpen,
-      },
+        collapseOpen: !this.state.collapseOpen
+      }
     });
-  }
+  };
 
-  //let imgURL = this.props.user.photoURL;
   render() {
     return (
       <Navbar type="dark" theme="dark" expand="md">
@@ -66,7 +57,6 @@ export default class NavComp extends Component {
               toggle={this.toggleDropdown}
             >
               <DropdownToggle nav caret>
-                {/* <img class="circular--square" src="${this.props.user.photoURL}" /> */}
                 <img
                   className="circular--square"
                   src={this.props.loggedUser.photoURL.toString()}
@@ -77,7 +67,6 @@ export default class NavComp extends Component {
                 <DropdownItem>
                   Signed in as: <br /> {this.props.loggedUser.displayName}
                 </DropdownItem>
-                {/* <button type="button" class="btn btn-light" onClick={e => this.props.onUnsubscribeClick(e)}><DropdownItem>Unsubscribe from<br/>Pocket Calendar</DropdownItem></button> */}
                 <DropdownItem onClick={(e) => this.props.onUnsubscribeClick(e)}>
                   Unsubscribe from
                   <br />

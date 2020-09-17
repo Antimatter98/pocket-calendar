@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import logo from "./save-icon.png";
-
-//import "./style.css";
 
 import {
   Navbar,
@@ -10,44 +7,38 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Collapse,
+  Collapse
 } from "shards-react";
 
-//import logo from "src/pages/react-multi.png"
+import logo from "./save-icon.png";
 
 export default class SimpleNav extends Component {
   constructor(props) {
     super(props);
-
-    this.toggleDropdown = this.toggleDropdown.bind(this);
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-
     this.state = {
       dropdownOpen: false,
-      collapseOpen: false,
+      collapseOpen: false
     };
   }
 
-  toggleDropdown() {
+  toggleDropdown = () => {
     this.setState({
       ...this.state,
       ...{
-        dropdownOpen: !this.state.dropdownOpen,
-      },
+        dropdownOpen: !this.state.dropdownOpen
+      }
     });
-    console.log('"' + this.props.userPhoto + '"');
-  }
+  };
 
-  toggleNavbar() {
+  toggleNavbar = () => {
     this.setState({
       ...this.state,
       ...{
-        collapseOpen: !this.state.collapseOpen,
-      },
+        collapseOpen: !this.state.collapseOpen
+      }
     });
-  }
+  };
 
-  //let imgURL = this.props.user.photoURL;
   render() {
     return (
       <Navbar type="dark" theme="dark" expand="md" full>

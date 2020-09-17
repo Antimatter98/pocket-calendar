@@ -1,20 +1,17 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 
-import MiscBase from "../../component/core/MiscBase";
-
-const About = () => {
+const LandingInfo = () => {
   return (
-    <MiscBase>
-      <div align="left" className="privacy-background about-content">
-        <div>
+    <React.Fragment>
+      <div className="home-alt text">
+        <div className="content-data">
           <h3 className="text">What is Pocket Calendar all about?</h3>
           <p>
             Pocket calendar is built to help those people who often bookmark
             items to their pocket account and may forget to checkout these items
             again.
           </p>
-
           <p>
             This WebApp schedules unread items from the users' pocket account to
             his/her Google Calendar so that they can check them out their own
@@ -25,7 +22,9 @@ const About = () => {
             your preferred daily reading time.
           </p>
         </div>
-        <div>
+      </div>
+      <div className="home text">
+        <div className="content-data">
           <h3 className="text">Signing up is just 4 steps away...</h3>
           <p>1. Sign up with your Google account</p>
           <p>2. Grant restricted access to your Google calendar</p>
@@ -44,10 +43,12 @@ const About = () => {
           </Link>
         </p>
         <br />
+        <p>So what are you waiting for? Sign up for Pocket Calendar now!</p>
+        <br />
         {/* <a href="#top" className="text"> ^ Scroll to top</a> */}
       </div>
-    </MiscBase>
+    </React.Fragment>
   );
 };
 
-export default withRouter(About);
+export default withRouter(LandingInfo);
