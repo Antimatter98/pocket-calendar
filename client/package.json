@@ -12,7 +12,7 @@
     "firebase": "^7.14.1",
     "flatted": "^2.0.1",
     "moment": "^2.24.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "patch-package": "^6.2.2",
     "rc-time-picker": "^3.7.3",
     "react": "^16.13.0",
